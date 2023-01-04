@@ -1,9 +1,6 @@
 .section{
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%);
     width: 300px;
-
+    margin-top: 20px;
 }
 .label{
         font-size: 18px;

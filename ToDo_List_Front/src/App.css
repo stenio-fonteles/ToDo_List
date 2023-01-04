@@ -3,4 +3,28 @@
   height: 100vh;
   padding: 0;
   margin:0;
+  text-align: center;
+}
+.register{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+.division{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.sectionCard{
+  height: 100vh;
+
+}
+
+.cards{
+  left: 5%;
+ }
+
+.cards2{
+ 
+ right: 5%;
 }
