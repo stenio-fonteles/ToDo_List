@@ -1,0 +1,32 @@
+.card{
+    width: 300px;
+    font-size: 12px;
+    text-align: center;
+    background-color: rgba(128, 128, 128, 0.395);
+    border-radius: 8px;
+    margin-left: 10px;
+
+}
+.card2{
+    width: 300px;
+    font-size: 12px;
+    text-align: center;
+    background-color: rgba(128, 128, 128, 0.395);
+    border-radius: 8px;
+    margin-left: 80%;
+}
+
+.card div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    
+}
+.Delete{
+    margin-bottom: 10px;
+}
+.Concluded{
+    margin-bottom: 10px;
+    background-color: rgb(39, 255, 39);
+    color: black;
+}
