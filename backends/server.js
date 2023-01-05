@@ -18,7 +18,7 @@ app.post('/', (req,res) =>{
         id:randomUUID(),
         data_finish:data_finish,
         nameTask: name,
-        data_start: new Date(),
+        data_start: new Date().toLocaleDateString('pt-br'),
         description: description,
         priority:priority,
         old:old
@@ -37,9 +37,8 @@ app.put("/:id",(req,res) =>{
     const {id} = req.params
     const index = ToDo.findIndex(element => element.id == id)
     ToDo[index].old = "Concluído"
-    res.send(ToDo[index])
 })
 
 app.listen(3000, ()=>{
-    console.log("deu bom")
+    console.log("Server on")
 })

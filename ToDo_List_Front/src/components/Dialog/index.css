@@ -1,0 +1,9 @@
+dialog{
+    background-color: rgb(175, 175, 175);
+    border-radius: 10px;
+    width: 350px;
+    height: 350px;
+    color: black;
+    border: none;
+    box-shadow: 3px 0 0.4em rgba(0, 0, 0, 0.751), -1em 0 0.4em rgba(0, 0, 0, 0.226);
+}

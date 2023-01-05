@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react"
-import { post } from "../../axios/axios"
 import Calendar from 'react-calendar';
 import './index.css'
 
 
-export function Register(){
-    const [inputToDo, setInputToDo] = useState()
-    const [description, setDescription] = useState()
-    const [value, onChange] = useState(new Date(2018));
+export function Register({onSubmit,data}){
+    const [inputToDo, setInputToDo] = useState('')
+    const [description, setDescription] = useState('')
+    const [value, setValueDate] = useState(new Date().toLocaleDateString('pt-br'));
     const [status, setStatus ] = useState()
     const [show, notShow] = useState(false)
 
@@ -19,13 +18,7 @@ export function Register(){
         "old":"New"
     }
 
-    async function postToDoList(){
-        await post(obj)
-      } 
     
-      useEffect(()=>{
-      },[postToDoList])
-
     return(
         <div className="section">
             <label className="label">Name of Task: </label>
@@ -33,16 +26,15 @@ export function Register(){
             <label  className="label">Description: </label>
             <input className="input" onChange={(e) => setDescription(e.target.value)}></input>
             <select className="select" onChange={(e) => setStatus(e.target.value)}>
-                <option disabled>Priority</option>
                 <option value={"Low"}>Low</option>
                 <option value={"Medium"}>Medium</option>
                 <option value={"Hight"}>Hight</option>
             </select>
             <button onClick={() => notShow(!show)}>Calender</button>
-            <button onClick={postToDoList}>Send</button>
+            <button onClick={() => onSubmit(obj)}>Send</button>
             {
                 show ?(
-                    <Calendar onChange={onChange} value={value} className="calender"/>
+                    <Calendar onChange={setValueDate} value={value} className="calender"/>
                 ):(
                     <></>
                 )

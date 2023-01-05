@@ -1,15 +1,7 @@
-import { useEffect, useState } from 'react'
-import { axiosDelete, axiosPut, get } from "../../axios/axios"
 import './index.css'
+import { Dialog } from '../Dialog';
 
-export function Card({data}){
-    async function deleteToDoList(e){
-        axiosDelete(e)
-    }
-
-    async function putToDoList(e){
-        axiosPut(e)
-    }
+export function Card({data,onDelete,onFinish}){
     return(
         <div className='card'>
             {data.priority == "Low"?(
@@ -25,8 +17,9 @@ export function Card({data}){
             </div>
             <p className='title'>{data.nameTask.toUpperCase()}</p>
             <p>{data.description}</p>
-            <button className='delete' onClick={()=>deleteToDoList(data.id)}> Delete </button>
-            <button className='conclude'  onClick={() => putToDoList(data.id)}> Conclude </button>
+            <button className='delete' onClick={()=> onDelete(data.id) } > Delete </button>
+            <button className='conclude'  onClick={() => onFinish(data.id) }> Conclude </button>
+            <Dialog dialogData={data}/>
         </div>
     )
 }

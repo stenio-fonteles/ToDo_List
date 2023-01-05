@@ -28,5 +28,4 @@ export async function axiosDelete(e) {
 
 export async function axiosPut(e) {
   const id = await axios.put(`http://localhost:3000/${e}`)
-  console.log(id)
 }
