@@ -7,6 +7,7 @@ app.use(express.json())
 app.use(cors())
 
 const ToDo =  []
+const Relatorio = []
 
 app.get('/', (req,res) =>{
     return res.json(ToDo)
@@ -37,6 +38,25 @@ app.put("/:id",(req,res) =>{
     const {id} = req.params
     const index = ToDo.findIndex(element => element.id == id)
     ToDo[index].old = "Concluído"
+})
+
+
+// rotas para relatório
+
+
+app.get('/report', (req,res) =>{
+    return res.json(Relatorio)
+})
+
+
+app.post('/report',(req,res) =>{
+    const {id, content,name} = req.body
+    Relatorio.push({
+        id:id,
+        report:content,
+        name:name
+    })
+    res.send(Relatorio)
 })
 
 app.listen(3000, ()=>{

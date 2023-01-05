@@ -1,9 +1,31 @@
-dialog{
-    background-color: rgb(175, 175, 175);
-    border-radius: 10px;
-    width: 350px;
-    height: 350px;
+.modal{
+    border-radius: 5px;
+    background-color: rgb(255, 253, 250);
     color: black;
     border: none;
-    box-shadow: 3px 0 0.4em rgba(0, 0, 0, 0.751), -1em 0 0.4em rgba(0, 0, 0, 0.226);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
+}
+.modal h2{
+    font-weight: 300;
+    margin-bottom: 100px;
+}
+.body{
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+}
+.footer{
+    display: flex;
+    
+    flex-direction: row;
+    margin: 20px;
+    justify-content: space-evenly;
 }

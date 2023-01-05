@@ -1,5 +1,4 @@
 import './index.css'
-import { Dialog } from '../Dialog';
 
 export function Card({data,onDelete,onFinish}){
     return(
@@ -19,7 +18,6 @@ export function Card({data,onDelete,onFinish}){
             <p>{data.description}</p>
             <button className='delete' onClick={()=> onDelete(data.id) } > Delete </button>
             <button className='conclude'  onClick={() => onFinish(data.id) }> Conclude </button>
-            <Dialog dialogData={data}/>
         </div>
     )
 }

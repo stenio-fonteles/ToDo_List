@@ -1,13 +1,18 @@
 
 import { useEffect, useState } from 'react';
 import './App.css'
-import { axiosDelete, axiosPut, get, post } from './axios/axios';
+import { axiosDelete, axiosPut, get, post,registerReport,getReport} from './axios/axios';
 import { Card } from './components/Cards/index';
 import { Home } from './components/Home';
 import { Register } from './components/register';
+import {Example} from './components/Dialog'
+import { Report } from './components/reports';
 
 function App() {
   const [ data, setData] = useState([])
+  const [reports, setReports] = useState([])
+  const [ showModal,setShowModal] = useState(false)
+
 
   async function getInfo() {
     const data = await get();
@@ -15,7 +20,6 @@ function App() {
   }
 
   async function deleteToDoList(id){
-    console.log(id)
     await axiosDelete(id)
     setData(data.filter((task) =>{
       return task.id !== id
@@ -23,20 +27,41 @@ function App() {
   }
 
 async function putToDoList(id){
-   await axiosPut(id)
+  seeModal()
+  await axiosPut(id)
+}
+
+function seeModal(){
+  setShowModal(!showModal)
 }
 
 async function postToDoList(obj){
   if(obj.inputToDo == "" || obj.description == "" || obj.status == "") {
-      alert("Preencha todas as informações")
-      return
+    alert("Preencha todas as informações")
+    return
   }
-      await post(obj)
+  await post(obj)
 } 
+
+
+
+// area report
+
+async function sendReport(e){
+  await registerReport(e)
+}
+
+async function getReportDatas(){
+  const data = await getReport()
+  setReports(data)
+}
+
+
 
 useEffect(() => {
   getInfo()
-},[deleteToDoList,postToDoList, putToDoList])
+  getReportDatas()
+},[])
 
   return (
     <div>
@@ -48,33 +73,41 @@ useEffect(() => {
         {
           data.map((e)=>{
             return(
-              <>
+              <div key={e.id}>
                 {e.old == "New"?(
                   <div className='cards' >
-                    <Card data={e}  key={e.id} onDelete={deleteToDoList} onFinish={putToDoList}/>
+                    <Example showModal={showModal} onActive={seeModal} onSubmitReport={sendReport} idTask={e}/>
+                    <Card data={e}   onDelete={deleteToDoList} onFinish={putToDoList}/>
                   </div>
                 ):(
                  <></>
                 )}
-              </>
+              </div>
             )
           })
         }
       </div>
-      <Home/>
+      <div style={{marginTop:"300px"}}>
+      {reports.map((report) =>{
+        console.log(report)
+        return(
+          <Report data={report} />
+        )
+      })}
+      </div>
       <div>
       {
           data.map((e)=>{
             return(
-              <>
+              <div key={e.id}>
                 {e.old == "Concluído"?(
                   <div className='cards' >
-                    <Card data={e}  key={e.id}  onDelete={deleteToDoList} onFinish={putToDoList}/>
+                    <Card data={e}  onDelete={deleteToDoList} onFinish={putToDoList}/>
                   </div>
                 ):(
                  <></>
                 )}
-              </>
+              </div>
             )
           })
         }
