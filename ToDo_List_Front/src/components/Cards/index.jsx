@@ -1,23 +1,24 @@
+import { useState } from 'react'
 import './index.css'
 
-export function Card({data,onDelete,onFinish}){
+
+export function Card({data,onFinish}){
+
     return(
-        <div className='card'>
-            {data.priority == "Low"?(
-                <p style={{backgroundColor:"blue"}}>{data.priority}</p>
-            ): data.priority == "Medium"?(
-                <p style={{backgroundColor:"orange"}}>{data.priority}</p>
-            ):(
-                <p style={{backgroundColor:"red"}}>{data.priority}</p>
-            )}
-            <div className='date'>
-                <p>{data.data_start}</p>
-                <p>{data.data_finish}</p>
+        <div style={{  backgroundImage: `url(${data.tool})`}} className="Card" onClick={() => onFinish(data.id)}>
+            <div>
+                <h3>{data.nameTask}</h3>
+                <div>
+                    {data.priority == "high"?(
+                        <p style={{backgroundColor:"red"}}>{data.priority}</p>
+                    ):data.priority == "Average"?(
+                        <p style={{backgroundColor:"Orange"}}>{data.priority}</p>
+                    ):(
+                        <p style={{backgroundColor:"blue"}}>{data.priority}</p>
+                    )}
+                    <p>{data.Age}</p>
+                </div>
             </div>
-            <p className='title'>{data.nameTask.toUpperCase()}</p>
-            <p>{data.description}</p>
-            <button className='delete' onClick={()=> onDelete(data.id) } > Delete </button>
-            <button className='conclude'  onClick={() => onFinish(data.id) }> Conclude </button>
         </div>
     )
 }

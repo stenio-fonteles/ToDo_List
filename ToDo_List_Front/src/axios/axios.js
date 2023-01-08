@@ -14,21 +14,91 @@ export async function get(){
 export async function post(e) {
   const { data } = await axios.post('http://localhost:3000/',{
           "name": e.nameTask, 
-          "data_finish":e.data_finish,
           "description": e.description,
           "priority":e.priority,
-          "old":e.old
+          "career":e.career,
+          "tool":e.tool,
         }
       )
 }
+
+
+
+export async function axiosPut(data) {
+  const reposeDatas = await axios.put(`http://localhost:3000/${data.id}`,data)
+  console.log(data,"oi")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export async function axiosDelete(e) {
   const {id} = await axios.delete(`http://localhost:3000/${e}`)
 }
 
-export async function axiosPut(e) {
-  const id = await axios.put(`http://localhost:3000/${e}`)
+
+
+export async function getFilterArr(e) {
+  const {data} = await axios( 
+    {
+      method: 'GET',
+      url: `http://localhost:3000/status/${e}`,
+      headers: { 
+        'Content-Type': 'application/json'
+      }
+    })  
+  console.log(data)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // area de envio de relatório

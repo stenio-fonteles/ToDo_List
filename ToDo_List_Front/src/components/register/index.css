@@ -1,29 +1,16 @@
-.section{
-    width: 300px;
-    margin-top: 20px;
+.formRegister{
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    margin-top: 100px;
+    border-right: 1px solid black;
 }
-.label{
-        font-size: 18px;
-        font-weight: bold;
-        font-family: monospace;
-}
-.input{
-    width: 300px;
-    height: 24px;
-    margin: 5px;
-    border-radius: 5px;
-    outline: none;
-    padding-left: 5px;
-}
-.calender{
-    width: 360px;
-}
+inputForm{
+    color: white;
+    margin-top: 10px;
 
-.select{
-    width: 100px;
-    height: 40px;
-    border-radius: 10px;
-    padding-left: 5px;
-    font-weight: bold;
-    outline: none;
+}
+.modalRegister{
+    margin-bottom: 20px;
 }

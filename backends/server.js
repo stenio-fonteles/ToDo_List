@@ -7,25 +7,68 @@ app.use(express.json())
 app.use(cors())
 
 const ToDo =  []
+const arrFilted = []
 const Relatorio = []
 
 app.get('/', (req,res) =>{
     return res.json(ToDo)
 })
 
+
 app.post('/', (req,res) =>{
-    const { name, description,data_finish, priority,old } = req.body;
+    const { name, description, priority,old,career,tool } = req.body;
     ToDo.push({
         id:randomUUID(),
-        data_finish:data_finish,
         nameTask: name,
         data_start: new Date().toLocaleDateString('pt-br'),
         description: description,
         priority:priority,
-        old:old
+        Age:"New",
+        career:career,
+        tool:tool
     })
     res.send(ToDo)
 })
+
+
+
+app.get("/status/:old", (req,res) =>{
+    const  {old}  = req.params;
+    const findStatus = ToDo.filter(element => element.old == old)
+    arrFilted.push(ToDo[findStatus])
+    res.send(findStatus)
+})
+
+
+app.put("/:id",(req,res) =>{
+    const {id} = req.params
+    const body = req.body
+    const index = ToDo.findIndex(element => element.id == id)
+    ToDo[index].Age = body.newStatus
+    console.log(body.newStatus)
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.delete("/:id", (req,res) => {
     const {id} = req.params
@@ -34,11 +77,6 @@ app.delete("/:id", (req,res) => {
     res.status(204).send()
 })
 
-app.put("/:id",(req,res) =>{
-    const {id} = req.params
-    const index = ToDo.findIndex(element => element.id == id)
-    ToDo[index].old = "Concluído"
-})
 
 
 // rotas para relatório

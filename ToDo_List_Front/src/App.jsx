@@ -1,48 +1,51 @@
 
 import { useEffect, useState } from 'react';
 import './App.css'
-import { axiosDelete, axiosPut, get, post,registerReport,getReport} from './axios/axios';
+import { axiosDelete, getFilterArr, get, post,registerReport,getReport, axiosPut} from './axios/axios';
 import { Card } from './components/Cards/index';
-import { Home } from './components/Home';
 import { Register } from './components/register';
-import {Example} from './components/Dialog'
-import { Report } from './components/reports';
+import { LeftOptions } from './components/LeftOptions';
+import {AlertDialogSlide } from './components/Dialog'
 
 function App() {
   const [ data, setData] = useState([])
   const [reports, setReports] = useState([])
   const [ showModal,setShowModal] = useState(false)
+  const [ AlertModal,setAlert] = useState('')
+  const [ idModal,setIdModal]= useState()
+ 
 
 
   async function getInfo() {
     const data = await get();
     setData(data)
+    console.log(data)
   }
 
-  async function deleteToDoList(id){
-    await axiosDelete(id)
-    setData(data.filter((task) =>{
-      return task.id !== id
-    }))
+
+  async function putToDoList(data){
+    seeModal()
+    await axiosPut(data)
   }
 
-async function putToDoList(id){
-  seeModal()
-  await axiosPut(id)
-}
-
-function seeModal(){
-  setShowModal(!showModal)
-}
-
-async function postToDoList(obj){
-  if(obj.inputToDo == "" || obj.description == "" || obj.status == "") {
-    alert("Preencha todas as informações")
-    return
+  function seeModal(id){
+    setIdModal(id)
+    setShowModal(!showModal)
   }
-  await post(obj)
-} 
 
+  async function postToDoList(obj){
+    if(obj.inputToDo == "Nome da Task" || obj.description == "Descrição" || obj.status == "Severidade") {
+      setAlert("Error")
+      return
+    }
+    setAlert("Success")
+    await post(obj)
+  } 
+
+
+  async function filterStatus(e){
+    const {data} = await getFilterArr(e)
+  }
 
 
 // area report
@@ -56,63 +59,28 @@ async function getReportDatas(){
   setReports(data)
 }
 
-
-
 useEffect(() => {
   getInfo()
   getReportDatas()
 },[])
 
   return (
-    <div>
-      <div className='register'>
-        <Register onSubmit={postToDoList} />
+    <div className='Home'>
+      <div className='Fixed'>
+        <LeftOptions functionFilterStatus={filterStatus}/>
+        <Register onSubmit={postToDoList} AlertModal={AlertModal}/>
       </div>
-      <div className='division'>
-      <div className='sectionCard'>
-        {
-          data.map((e)=>{
-            return(
-              <div key={e.id}>
-                {e.old == "New"?(
-                  <div className='cards' >
-                    <Example showModal={showModal} onActive={seeModal} onSubmitReport={sendReport} idTask={e}/>
-                    <Card data={e}   onDelete={deleteToDoList} onFinish={putToDoList}/>
-                  </div>
-                ):(
-                 <></>
-                )}
-              </div>
+      <AlertDialogSlide showModal={showModal} claseModal={setShowModal} datas={data} editTask={putToDoList} idModal={idModal}/>
+      <div className='cardsGrid'>
+        {data.map((e) =>{
+          return(
+            <div className='tester' key={e.id}>
+              <Card data={e} onFinish={seeModal} />
+            </div>
             )
-          })
-        }
+        })}
       </div>
-      <div style={{marginTop:"300px"}}>
-      {reports.map((report) =>{
-        console.log(report)
-        return(
-          <Report data={report} />
-        )
-      })}
-      </div>
-      <div>
-      {
-          data.map((e)=>{
-            return(
-              <div key={e.id}>
-                {e.old == "Concluído"?(
-                  <div className='cards' >
-                    <Card data={e}  onDelete={deleteToDoList} onFinish={putToDoList}/>
-                  </div>
-                ):(
-                 <></>
-                )}
-              </div>
-            )
-          })
-        }
-      </div>
-      </div>
+
     </div>
   )
 }
