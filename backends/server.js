@@ -10,13 +10,15 @@ const ToDo =  []
 const arrFilted = []
 const Relatorio = []
 
+const AllRelatorio = []
+
 app.get('/', (req,res) =>{
     return res.json(ToDo)
 })
 
 
 app.post('/', (req,res) =>{
-    const { name, description, priority,old,career,tool } = req.body;
+    const { name, description, priority,career,tool } = req.body;
     ToDo.push({
         id:randomUUID(),
         nameTask: name,
@@ -30,44 +32,14 @@ app.post('/', (req,res) =>{
     res.send(ToDo)
 })
 
-
-
-app.get("/status/:old", (req,res) =>{
-    const  {old}  = req.params;
-    const findStatus = ToDo.filter(element => element.old == old)
-    arrFilted.push(ToDo[findStatus])
-    res.send(findStatus)
-})
-
-
 app.put("/:id",(req,res) =>{
     const {id} = req.params
     const body = req.body
     const index = ToDo.findIndex(element => element.id == id)
     ToDo[index].Age = body.newStatus
-    console.log(body.newStatus)
+    AllRelatorio.push({"id": id, "newStatus": body.newDescription})
+
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 app.delete("/:id", (req,res) => {
@@ -77,25 +49,17 @@ app.delete("/:id", (req,res) => {
     res.status(204).send()
 })
 
+// FUNCTION FILTER WITH STATUS
+// app.get("/status/:old", (req,res) =>{
+//     const  {old}  = req.params;
+//     const findStatus = ToDo.filter(element => element.old == old)
+//     arrFilted.push(ToDo[findStatus])
+//     res.send(findStatus)
+// })
 
 
-// rotas para relatório
 
 
-app.get('/report', (req,res) =>{
-    return res.json(Relatorio)
-})
-
-
-app.post('/report',(req,res) =>{
-    const {id, content,name} = req.body
-    Relatorio.push({
-        id:id,
-        report:content,
-        name:name
-    })
-    res.send(Relatorio)
-})
 
 app.listen(3000, ()=>{
     console.log("Server on")

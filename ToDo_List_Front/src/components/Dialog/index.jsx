@@ -72,13 +72,9 @@ const CustomInput = React.forwardRef(function CustomInput(props, ref) {
   );
 });
 
-export function AlertDialogSlide({showModal,claseModal,editTask,datas,idModal}) {
+export function AlertDialogSlide({getDataForNewTask,datas,seeModalYes}) {
   const [filterStates,setFilterStates] = useState('')
   const [newDescription, setNewDescription] = useState('')
-
-  const [taskFilterSelected, setTaskFilterSelected] = useState('')
-
-
 
 
   const newDatasStatus ={
@@ -86,12 +82,12 @@ export function AlertDialogSlide({showModal,claseModal,editTask,datas,idModal}) 
     "newDescription":newDescription,
     "id":datas.id
   }
+
   function close(){
-    claseModal(false)
-    editTask(newDatasStatus)
-    const taskSelected = datas.filter(element => element.id == idModal)
-    setTaskFilterSelected(taskSelected)
-    console.log(taskFilterSelected )
+    getDataForNewTask(newDatasStatus)
+  }
+
+  function closeModal(){
   }
 
 
@@ -99,15 +95,15 @@ export function AlertDialogSlide({showModal,claseModal,editTask,datas,idModal}) 
   return (
     <div>
       <Dialog
-        open={showModal}
+        open={seeModalYes }
         TransitionComponent={Transition}
         keepMounted
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{taskFilterSelected.nameTask}</DialogTitle>
+        <DialogTitle>{datas.nameTask}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            {taskFilterSelected.description}
+            {datas.description}
           </DialogContentText>
           <div>
             <p>Alterar status:</p>
@@ -137,7 +133,7 @@ export function AlertDialogSlide({showModal,claseModal,editTask,datas,idModal}) 
           <CustomInput aria-label="Demo input" placeholder="Type something…"  onChange={(e) => setNewDescription(e.target.value)}/>
         </DialogContent>
         <DialogActions>
-          <Button onClick={close}>Cancel</Button>
+          <Button onClick={closeModal}>Cancel</Button>
           <Button onClick={close}>Save</Button>
         </DialogActions>
       </Dialog>

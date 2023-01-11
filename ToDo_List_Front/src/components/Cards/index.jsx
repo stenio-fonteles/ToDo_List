@@ -1,11 +1,28 @@
 import { useState } from 'react'
+import { AlertDialogSlide } from '../Dialog'
 import './index.css'
 
 
-export function Card({data,onFinish}){
+export function Card({data, editTaskWithNewData}){
+    const [ showModal,setShowModal] = useState(false)
+
+    function newTask(){
+        setShowModal(!showModal)
+    }
+    function functionGetDataForNewTask(newDatas){
+        setShowModal(!showModal)
+        editTaskWithNewData(newDatas)
+
+    }
+
+
+
+
 
     return(
-        <div style={{  backgroundImage: `url(${data.tool})`}} className="Card" onClick={() => onFinish(data.id)}>
+        <>
+        <AlertDialogSlide  seeModalYes={showModal} datas={data} getDataForNewTask={functionGetDataForNewTask}/>
+        <div style={{  backgroundImage: `url(${data.tool})`}} className="Card" onClick={() => newTask()}>
             <div>
                 <h3>{data.nameTask}</h3>
                 <div>
@@ -20,5 +37,6 @@ export function Card({data,onFinish}){
                 </div>
             </div>
         </div>
+        </>
     )
 }

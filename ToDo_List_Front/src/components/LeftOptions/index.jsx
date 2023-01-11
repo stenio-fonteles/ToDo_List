@@ -5,13 +5,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import { Input } from '@mui/material';
 import "./index.css"
-export  function LeftOptions({functionFilterStatus}) {
+export  function LeftOptions() {
 
 
   return (
     <div className='section'>
         <FormControl component="fieldset">
-            <FormGroup aria-label="position"  onChange={(e) => functionFilterStatus(e.target.value)}>
+            <FormGroup aria-label="position">
                 <FormControlLabel
                 value="New"
                 control={<Checkbox />}

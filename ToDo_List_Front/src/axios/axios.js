@@ -26,7 +26,6 @@ export async function post(e) {
 
 export async function axiosPut(data) {
   const reposeDatas = await axios.put(`http://localhost:3000/${data.id}`,data)
-  console.log(data,"oi")
 }
 
 

@@ -18,7 +18,6 @@ export function Register({onSubmit,AlertModal}){
     const [career, setCareer] = useState()
     const [tool, setTool] = useState()
   
-
     const obj = {
         "nameTask": inputToDo,
         "description": description,
@@ -26,8 +25,6 @@ export function Register({onSubmit,AlertModal}){
         "career":career,
         "tool":tool,
     }
-
-
     
     return(
         <div className="formRegister">
