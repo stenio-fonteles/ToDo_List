@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import './App.css'
-import { get, post, axiosPut} from './axios/axios';
+import { get, post, FilterTasksForStatus,axiosPut,getAllMessenger} from './axios/axios';
 import { Card } from './components/Cards/index';
 import { Register } from './components/register';
 import { LeftOptions } from './components/LeftOptions';
@@ -15,13 +15,6 @@ function App() {
     setData(data)
   }
 
-
-
-  async function functionEditTaskWithNewData(newDatas) {
-    await axiosPut(newDatas)
-  }
- 
-
   async function postToDoList(obj){
     if(obj.inputToDo == "Nome da Task" || obj.description == "Descrição" || obj.status == "Severidade") {
       setAlert("Error")
@@ -31,6 +24,22 @@ function App() {
     await post(obj)
   } 
 
+  async function filterStatus(dataForFilterStatus) {
+    const tableFilteresForStatus = await FilterTasksForStatus(dataForFilterStatus)
+    setData(tableFilteresForStatus)
+
+  }
+
+
+  async function functionEditTaskWithNewData(newDatas) {
+    await axiosPut(newDatas)
+  }
+ 
+
+  async function getMessengerHistory(idTask){
+    await getAllMessenger(idTask)
+  }
+
 
   useEffect(() => {
     getInfo()
@@ -39,14 +48,14 @@ function App() {
   return (
     <div className='Home'>
       <div className='Fixed'>
-        <LeftOptions/>
+        <LeftOptions functionFilter={filterStatus}/>
         <Register onSubmit={postToDoList} AlertModal={AlertModal}/>
       </div>
       <div className='cardsGrid'>
         {data.map((e) =>{
           return(
             <div className='tester' key={e.id}>
-              <Card data={e} editTaskWithNewData={functionEditTaskWithNewData}/>
+              <Card data={e} editTaskWithNewData={functionEditTaskWithNewData} getMessengers={getMessengerHistory}/>
             </div>
             )
         })}

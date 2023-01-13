@@ -3,7 +3,7 @@ import { AlertDialogSlide } from '../Dialog'
 import './index.css'
 
 
-export function Card({data, editTaskWithNewData}){
+export function Card({data, editTaskWithNewData,getMessengers}){
     const [ showModal,setShowModal] = useState(false)
 
     function newTask(){
@@ -12,19 +12,14 @@ export function Card({data, editTaskWithNewData}){
     function functionGetDataForNewTask(newDatas){
         setShowModal(!showModal)
         editTaskWithNewData(newDatas)
-
     }
-
-
-
-
 
     return(
         <>
-        <AlertDialogSlide  seeModalYes={showModal} datas={data} getDataForNewTask={functionGetDataForNewTask}/>
-        <div style={{  backgroundImage: `url(${data.tool})`}} className="Card" onClick={() => newTask()}>
+        <AlertDialogSlide  seeModalYes={showModal} datas={data} closeDialog={newTask} getDataForNewTask={functionGetDataForNewTask} getALLmessengers={getMessengers}/>
+        <div style={{  backgroundImage: `url(${data.tech})`}} className="Card" onClick={() => newTask()}>
             <div>
-                <h3>{data.nameTask}</h3>
+                <h3>{data.name}</h3>
                 <div>
                     {data.priority == "high"?(
                         <p style={{backgroundColor:"red"}}>{data.priority}</p>
@@ -33,7 +28,7 @@ export function Card({data, editTaskWithNewData}){
                     ):(
                         <p style={{backgroundColor:"blue"}}>{data.priority}</p>
                     )}
-                    <p>{data.Age}</p>
+                    <p>{data.status}</p>
                 </div>
             </div>
         </div>

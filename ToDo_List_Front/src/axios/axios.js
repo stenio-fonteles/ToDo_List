@@ -22,101 +22,20 @@ export async function post(e) {
       )
 }
 
-
-
-export async function axiosPut(data) {
-  const reposeDatas = await axios.put(`http://localhost:3000/${data.id}`,data)
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-export async function axiosDelete(e) {
-  const {id} = await axios.delete(`http://localhost:3000/${e}`)
-}
-
-
-
-export async function getFilterArr(e) {
-  const {data} = await axios( 
-    {
-      method: 'GET',
-      url: `http://localhost:3000/status/${e}`,
-      headers: { 
-        'Content-Type': 'application/json'
-      }
-    })  
-  console.log(data)
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// area de envio de relatório
-
-export async function registerReport(e){
-  const {data} = await axios.post('http://localhost:3000/report',{
-    "id":e.id,
-    "content":e.report,
-    "name":e.name
-  })
-}
-
-export async function getReport(){
-  const {data} = await axios({
-    method: 'GET',
-    url: 'http://localhost:3000/report',
-    headers: { 
-      'Content-Type': 'application/json'
+export async function FilterTasksForStatus(newStatus) {
+  const {data} = await axios.post("http://localhost:3000/status/",
+    { 
+      headers: {'Content-Type': 'application/json'},
+      body: newStatus
     }
-  })
+  )  
   return data
+}
+
+export async function axiosPut(newStatusAndNewDescriptio) {
+  await axios.put("http://localhost:3000/",newStatusAndNewDescriptio)
+}
+
+export async function getAllMessenger(idTask) {
+  await axios.get(`http://localhost:3000/:${idTask}`)
 }

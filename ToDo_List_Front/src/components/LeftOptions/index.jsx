@@ -3,15 +3,25 @@ import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import { Input } from '@mui/material';
+import { Button, Input } from '@mui/material';
 import "./index.css"
-export  function LeftOptions() {
+import { useState } from 'react';
+
+export  function LeftOptions({functionFilter}) {
+    const [filterStatus, setFilterStatus] = useState()
 
 
+    function sendNewStatus(){
+        functionFilter(filterStatus)
+    }
+
+    
+    
+    
   return (
     <div className='section'>
         <FormControl component="fieldset">
-            <FormGroup aria-label="position">
+            <FormGroup aria-label="position" onChange={(event) => setFilterStatus(event.target.value)}>
                 <FormControlLabel
                 value="New"
                 control={<Checkbox />}
@@ -37,6 +47,7 @@ export  function LeftOptions() {
                 labelPlacement="end"
                 />
             </FormGroup>
+            <Button variant="outlined" onClick={sendNewStatus}>query</Button>
         </FormControl>
         <Input value={"Buscar"}/>
         <FormControl component="fieldset">

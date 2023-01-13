@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 var cors = require('cors')
-const {randomUUID} = require('crypto')
+const {randomUUID} = require('crypto');
+const { connection } = require('./connection');
 
 app.use(express.json())
 app.use(cors())
@@ -12,50 +13,53 @@ const Relatorio = []
 
 const AllRelatorio = []
 
-app.get('/', (req,res) =>{
-    return res.json(ToDo)
+app.get('/', async (req,res) =>{
+    const tasks = await connection.task.findMany()
+    return res.json(tasks)
 })
 
 
-app.post('/', (req,res) =>{
+app.post('/', async (req,res) =>{
     const { name, description, priority,career,tool } = req.body;
-    ToDo.push({
-        id:randomUUID(),
-        nameTask: name,
-        data_start: new Date().toLocaleDateString('pt-br'),
-        description: description,
-        priority:priority,
-        Age:"New",
-        career:career,
-        tool:tool
+    await connection.task.create({
+        data:{
+            name:name,
+            description:description,
+            tech:tool,
+            category:career,
+            priority:priority
+        }
     })
     res.send(ToDo)
 })
 
-app.put("/:id",(req,res) =>{
-    const {id} = req.params
-    const body = req.body
-    const index = ToDo.findIndex(element => element.id == id)
-    ToDo[index].Age = body.newStatus
-    AllRelatorio.push({"id": id, "newStatus": body.newDescription})
+app.put("/", async (req, res) =>{
+    const body = req.body;
+    await connection.history.update({
+        where:{
+            id:body.id
+        },
+        data:{
+            description2: body.newDescription
 
+        }
+    })
+    await connection.task.update({data:{status:body.newStatus}, where: {id:body.id}})
 })
 
 
-app.delete("/:id", (req,res) => {
-    const {id} = req.params
-    const index = ToDo.findIndex(element => element.id == id)
-    ToDo.splice(index,1)
-    res.status(204).send()
+app.post("/status/", async (req,res) => {
+    const  {body}  = req.body;
+    const filteredTable = await connection.task.findMany({where:{status:body}})
+    res.json(filteredTable)
 })
 
-// FUNCTION FILTER WITH STATUS
-// app.get("/status/:old", (req,res) =>{
-//     const  {old}  = req.params;
-//     const findStatus = ToDo.filter(element => element.old == old)
-//     arrFilted.push(ToDo[findStatus])
-//     res.send(findStatus)
-// })
+app.get('/:id', async (req, res) =>{
+    const id = req.params;
+    const filteredTable = await connection.history.findMany({where:{id:id.id}})
+    res.json(filteredTable)
+})
+
 
 
 

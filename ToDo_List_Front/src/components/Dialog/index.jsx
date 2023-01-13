@@ -72,7 +72,7 @@ const CustomInput = React.forwardRef(function CustomInput(props, ref) {
   );
 });
 
-export function AlertDialogSlide({getDataForNewTask,datas,seeModalYes}) {
+export function AlertDialogSlide({getDataForNewTask,datas,seeModalYes,closeDialog,getALLmessengers}) {
   const [filterStates,setFilterStates] = useState('')
   const [newDescription, setNewDescription] = useState('')
 
@@ -80,16 +80,13 @@ export function AlertDialogSlide({getDataForNewTask,datas,seeModalYes}) {
   const newDatasStatus ={
     "newStatus": filterStates,
     "newDescription":newDescription,
-    "id":datas.id
+    "id": datas.id
   }
 
   function close(){
     getDataForNewTask(newDatasStatus)
+    getALLmessengers(datas.id)
   }
-
-  function closeModal(){
-  }
-
 
 
   return (
@@ -133,7 +130,7 @@ export function AlertDialogSlide({getDataForNewTask,datas,seeModalYes}) {
           <CustomInput aria-label="Demo input" placeholder="Type something…"  onChange={(e) => setNewDescription(e.target.value)}/>
         </DialogContent>
         <DialogActions>
-          <Button onClick={closeModal}>Cancel</Button>
+          <Button onClick={closeDialog}>Cancel</Button>
           <Button onClick={close}>Save</Button>
         </DialogActions>
       </Dialog>
