@@ -33,9 +33,10 @@ export async function FilterTasksForStatus(newStatus) {
 }
 
 export async function axiosPut(newStatusAndNewDescriptio) {
-  await axios.put("http://localhost:3000/",newStatusAndNewDescriptio)
+  const popularMessage = await axios.put("http://localhost:3000/",newStatusAndNewDescriptio)
 }
 
 export async function getAllMessenger(idTask) {
-  await axios.get(`http://localhost:3000/:${idTask}`)
+  const all = await axios.get(`http://localhost:3000/${idTask}`)
+  return all
 }

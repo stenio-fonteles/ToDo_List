@@ -34,17 +34,15 @@ app.post('/', async (req,res) =>{
 })
 
 app.put("/", async (req, res) =>{
-    const body = req.body;
-    await connection.history.update({
-        where:{
-            id:body.id
-        },
+    const {id,newDescription,newStatus} = req.body;
+    const retry_message= await connection.history.create({
         data:{
-            description2: body.newDescription
-
+            id_task: id,
+            message: newDescription
         }
     })
-    await connection.task.update({data:{status:body.newStatus}, where: {id:body.id}})
+    await connection.task.update({data:{status:newStatus}, where: {id:id}})
+    res.send(retry_message)
 })
 
 
@@ -55,12 +53,10 @@ app.post("/status/", async (req,res) => {
 })
 
 app.get('/:id', async (req, res) =>{
-    const id = req.params;
-    const filteredTable = await connection.history.findMany({where:{id:id.id}})
+    const {id} = req.params;
+    const filteredTable = await connection.history.findMany({where:{id_task:id.id}})
     res.json(filteredTable)
 })
-
-
 
 
 

@@ -9,6 +9,8 @@ import { LeftOptions } from './components/LeftOptions';
 function App() {
   const [ data, setData] = useState([])
   const [ AlertModal,setAlert] = useState('')
+
+  const [historyMesssager, setHistoryMessage] = useState([])
  
   async function getInfo() {
     const data = await get();
@@ -37,8 +39,10 @@ function App() {
  
 
   async function getMessengerHistory(idTask){
-    await getAllMessenger(idTask)
+    const allMessage = await getAllMessenger(idTask)
+    return allMessage
   }
+
 
 
   useEffect(() => {
@@ -55,7 +59,7 @@ function App() {
         {data.map((e) =>{
           return(
             <div className='tester' key={e.id}>
-              <Card data={e} editTaskWithNewData={functionEditTaskWithNewData} getMessengers={getMessengerHistory}/>
+              <Card datasForCreateCard={e} editTaskWithNewData={functionEditTaskWithNewData} getMessengers={getMessengerHistory}/>
             </div>
             )
         })}

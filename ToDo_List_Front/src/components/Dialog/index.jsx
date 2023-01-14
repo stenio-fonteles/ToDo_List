@@ -72,9 +72,11 @@ const CustomInput = React.forwardRef(function CustomInput(props, ref) {
   );
 });
 
-export function AlertDialogSlide({getDataForNewTask,datas,seeModalYes,closeDialog,getALLmessengers}) {
+export function AlertDialogSlide({getDataForNewTask,datas,seeModalYes,closeDialog, messagers}) {
   const [filterStates,setFilterStates] = useState('')
   const [newDescription, setNewDescription] = useState('')
+
+  const [history, setHistory] = useState([])
 
 
   const newDatasStatus ={
@@ -85,8 +87,15 @@ export function AlertDialogSlide({getDataForNewTask,datas,seeModalYes,closeDialo
 
   function close(){
     getDataForNewTask(newDatasStatus)
-    getALLmessengers(datas.id)
   }
+
+  const go = async () =>{
+    const datasMessengers = await messagers;
+    setHistory(datasMessengers)
+  }
+  go()
+  
+ 
 
 
   return (

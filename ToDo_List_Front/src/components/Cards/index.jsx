@@ -1,14 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AlertDialogSlide } from '../Dialog'
 import './index.css'
 
 
-export function Card({data, editTaskWithNewData,getMessengers}){
+export function Card({datasForCreateCard, editTaskWithNewData,getMessengers}){
     const [ showModal,setShowModal] = useState(false)
 
-    function newTask(){
+    async function newTask(){
         setShowModal(!showModal)
+       
     }
+
+
     function functionGetDataForNewTask(newDatas){
         setShowModal(!showModal)
         editTaskWithNewData(newDatas)
@@ -16,19 +19,19 @@ export function Card({data, editTaskWithNewData,getMessengers}){
 
     return(
         <>
-        <AlertDialogSlide  seeModalYes={showModal} datas={data} closeDialog={newTask} getDataForNewTask={functionGetDataForNewTask} getALLmessengers={getMessengers}/>
-        <div style={{  backgroundImage: `url(${data.tech})`}} className="Card" onClick={() => newTask()}>
+        <AlertDialogSlide  seeModalYes={showModal} datas={datasForCreateCard} closeDialog={newTask} getDataForNewTask={functionGetDataForNewTask} messagers={getMessengers}/>
+        <div style={{  backgroundImage: `url(${datasForCreateCard.tech})`}} className="Card" onClick={() => newTask()}>
             <div>
-                <h3>{data.name}</h3>
+                <h3>{datasForCreateCard.name}</h3>
                 <div>
-                    {data.priority == "high"?(
-                        <p style={{backgroundColor:"red"}}>{data.priority}</p>
-                    ):data.priority == "Average"?(
-                        <p style={{backgroundColor:"Orange"}}>{data.priority}</p>
+                    {datasForCreateCard.priority == "high"?(
+                        <p style={{backgroundColor:"red"}}>{datasForCreateCard.priority}</p>
+                    ):datasForCreateCard.priority == "Average"?(
+                        <p style={{backgroundColor:"Orange"}}>{datasForCreateCard.priority}</p>
                     ):(
-                        <p style={{backgroundColor:"blue"}}>{data.priority}</p>
+                        <p style={{backgroundColor:"blue"}}>{datasForCreateCard.priority}</p>
                     )}
-                    <p>{data.status}</p>
+                    <p>{datasForCreateCard.status}</p>
                 </div>
             </div>
         </div>

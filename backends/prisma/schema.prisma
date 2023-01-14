@@ -10,17 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model task{
-  id String @id @default(uuid())
-  name String
-  description String 
-  status String @default("New")
-  priority String
-  tech String
-  category String
+model task {
+  id          String    @id @default(uuid())
+  name        String
+  description String
+  status      String    @default("New")
+  priority    String
+  tech        String
+  category    String
+  history     history[]
 }
 
-model history{
-  id String @id
-  description Json
+model history {
+  id             String @id @default(uuid())
+  message        String
+  id_task        String
+  taskRelatation task   @relation(fields: [id_task], references: [id])
 }
