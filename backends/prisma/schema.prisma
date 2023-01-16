@@ -27,3 +27,14 @@ model history {
   id_task        String
   taskRelatation task   @relation(fields: [id_task], references: [id])
 }
+
+model category {
+  id       String @id @default(uuid())
+  category String
+}
+
+model tech {
+  id   String @id @default(uuid())
+  tech String
+  img  String
+}

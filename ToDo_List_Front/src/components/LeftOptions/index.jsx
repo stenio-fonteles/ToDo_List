@@ -47,9 +47,9 @@ export  function LeftOptions({functionFilter}) {
                 labelPlacement="end"
                 />
             </FormGroup>
-            <Button variant="outlined" onClick={sendNewStatus}>query</Button>
+            <hr></hr>
+          
         </FormControl>
-        <Input value={"Buscar"}/>
         <FormControl component="fieldset">
             <FormGroup aria-label="position" >
                 <FormControlLabel
@@ -84,6 +84,7 @@ export  function LeftOptions({functionFilter}) {
                 />
             </FormGroup>
         </FormControl>
+        <Button variant="outlined" onClick={sendNewStatus}>query</Button>
     </div>
   );
 }

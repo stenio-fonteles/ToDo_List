@@ -59,6 +59,13 @@ app.get('/:id', async (req, res) =>{
 })
 
 
+app.post('/tech-category', async(req, res) =>{
+    const {newCategory,newTech,image} = req.body;
+    await connection.category.create({data:{"category":newCategory}})
+    await connection.tech.create({data:{"img":image}})
+    await connection.tech.create({data:{"tech":newTech}})
+})
+
 
 
 app.listen(3000, ()=>{

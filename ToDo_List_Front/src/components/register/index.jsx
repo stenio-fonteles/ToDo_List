@@ -39,8 +39,10 @@ export function Register({onSubmit,AlertModal}){
                     </Alert>
                 ):(<></>)}
             </Stack>
-            <TextField id="outlined-basic" label="Name Task" variant="outlined" onChange={(e) => setInputToDo(e.target.value)}/>
-            <TextField id="outlined-basic" label="Descrição" variant="outlined"  onChange={(e) => setDescription(e.target.value)} />
+            <div className="TextField">
+                <TextField id="outlined-basic" label="Name Task" variant="outlined" onChange={(e) => setInputToDo(e.target.value)}/>
+                <TextField id="outlined-basic" label="Descrição" variant="outlined"  onChange={(e) => setDescription(e.target.value)} />
+            </div>
             
             <FormControl sx={{ m: 1, minWidth: 120 }} size="medium">
                 <InputLabel id="demo-select-small">Severidade</InputLabel>
@@ -60,7 +62,7 @@ export function Register({onSubmit,AlertModal}){
             </FormControl>
 
             <FormControl sx={{ m: 1, minWidth: 120 }} size="medium">
-                <InputLabel id="demo-select-small">Assunto</InputLabel>
+                <InputLabel id="demo-select-small">Categoria</InputLabel>
                 <Select
                     labelId="demo-select-small"
                     id="demo-select-small"
@@ -71,11 +73,12 @@ export function Register({onSubmit,AlertModal}){
                 >
                     <MenuItem value={'FrontEnd'}>FrontEnd</MenuItem>
                     <MenuItem value={'BackEnd'}>BackEnd</MenuItem>
+                    <MenuItem value={'FullStack'}>FullStack</MenuItem>
                 </Select>
             </FormControl>
 
             <FormControl sx={{ m: 1, minWidth: 120 }} size="medium">
-                <InputLabel id="demo-select-small">ORM</InputLabel>
+                <InputLabel id="demo-select-small">Tech</InputLabel>
                 <Select
                     labelId="demo-select-small"
                     id="demo-select-small"
@@ -84,12 +87,14 @@ export function Register({onSubmit,AlertModal}){
                     onChange={(e) => setTool(e.target.value)}
                     defaultValue={"https://pbs.twimg.com/card_img/1607686726608211970/fTGdzsp1?format=png&name=medium"}
                 >
-                    <MenuItem value={'https://pbs.twimg.com/card_img/1607686726608211970/fTGdzsp1?format=png&name=medium'}>React</MenuItem>
+                    <MenuItem value={'https://punkt.de/_Resources/Persistent/7/5/b/d/75bd14d2ed44da6bf49616fd635a36fa4bb2eac8/React_Native_Logo-1196x628.png'}>React</MenuItem>
                     <MenuItem value={'https://www.itnetwork.cz/images/10733/nodejs/nodejs_logo.png'}>Node</MenuItem>
                     <MenuItem value={"https://st2.depositphotos.com/4845131/7223/v/600/depositphotos_72231263-stock-illustration-data-hdd-icon.jpg"}>Banco de dados</MenuItem>
                 </Select>
             </FormControl>
-            <Button onClick={() => onSubmit(obj)} variant="outlined">Send</Button>
+            <div  className="button">
+                <Button  onClick={() => onSubmit(obj)} variant="outlined">Send</Button>
+            </div>
         </div>
     )
 }

@@ -1,147 +1,127 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import ListItemText from '@mui/material/ListItemText';
+import ListItem from '@mui/material/ListItem';
+import List from '@mui/material/List';
+import Divider from '@mui/material/Divider';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import Slide from '@mui/material/Slide';
-import InputUnstyled from '@mui/base/InputUnstyled';
-import { styled } from '@mui/system';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import Checkbox from '@mui/material/Checkbox';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { useState } from 'react';
 import { useEffect } from 'react';
-
-
-const blue = {
-  100: '#DAECFF',
-  200: '#80BFFF',
-  400: '#3399FF',
-  500: '#007FFF',
-  600: '#0072E5',
-};
-
-const grey = {
-  50: '#F3F6F9',
-  100: '#E7EBF0',
-  200: '#E0E3E7',
-  300: '#CDD2D7',
-  400: '#B2BAC2',
-  500: '#A0AAB4',
-  600: '#6F7E8C',
-  700: '#3E5060',
-  800: '#2D3843',
-  900: '#1A2027',
-};
-
-const StyledInputElement = styled('input')(
-  ({ theme }) => `
-  width: 320px;
-  font-family: IBM Plex Sans, sans-serif;
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.5;
-  padding: 12px;
-  border-radius: 12px;
-  color: ${theme.palette.mode === 'dark' ? grey[300] : grey[900]};
-  background: ${theme.palette.mode === 'dark' ? grey[900] : '#fff'};
-  border: 1px solid ${theme.palette.mode === 'dark' ? grey[700] : grey[200]};
-  box-shadow: 0px 2px 2px ${theme.palette.mode === 'dark' ? grey[900] : grey[50]};
-
-  &:hover {
-    border-color: ${blue[400]};
-  }
-
-  &:focus {
-    border-color: ${blue[400]};
-    outline: 3px solid ${theme.palette.mode === 'dark' ? blue[500] : blue[200]};
-  }
-`,
-);
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CustomInput = React.forwardRef(function CustomInput(props, ref) {
-  return (
-    <InputUnstyled slots={{ input: StyledInputElement }} {...props} ref={ref} />
-  );
-});
+export default function AlertDialogSlide({informationOfTask,showModal,notShowModal, getMessengers,allTasks,editTaskWithNewData}) {
+  const [fileredTask,setFilteredForDialog ] = useState()
+  const [filteredMessage, setFilteredMessage] = useState([])
 
-export function AlertDialogSlide({getDataForNewTask,datas,seeModalYes,closeDialog, messagers}) {
-  const [filterStates,setFilterStates] = useState('')
-  const [newDescription, setNewDescription] = useState('')
+  const [newStatus, setStatus] = useState('')
+  const [newDescription, setNewMessage] = useState('') 
 
-  const [history, setHistory] = useState([])
+  function senNewDatas(){
+    const obj = {
+      "newStatus":newStatus,
+      "newDescription": newDescription,
+      "id": informationOfTask
+    }
+    editTaskWithNewData(obj)
 
-
-  const newDatasStatus ={
-    "newStatus": filterStates,
-    "newDescription":newDescription,
-    "id": datas.id
   }
 
-  function close(){
-    getDataForNewTask(newDatasStatus)
+
+  async function getParamsForDetailsTask(){
+    const filterTask = await allTasks
+    const taskFilted = filterTask.filter(element => element.id == informationOfTask)
+    const FilterMessage = getMessengers.filter(element => element.id_task == informationOfTask)
+    setFilteredMessage(FilterMessage)
+    setFilteredForDialog(taskFilted[0])
   }
 
-  const go = async () =>{
-    const datasMessengers = await messagers;
-    setHistory(datasMessengers)
+  function closeModal(){
+    notShowModal(!showModal)
   }
-  go()
-  
- 
+
+
+  useEffect(() =>{
+    getParamsForDetailsTask()
+  },[showModal])
 
 
   return (
     <div>
       <Dialog
-        open={seeModalYes }
+        fullScreen
+        open={showModal}
+        onClose={showModal}
         TransitionComponent={Transition}
-        keepMounted
-        aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{datas.nameTask}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            {datas.description}
-          </DialogContentText>
-          <div>
-            <p>Alterar status:</p>
-            <FormControl component="fieldset">
-              <FormGroup aria-label="position"  onChange={(e) => setFilterStates(e.target.value)}>
-                  <FormControlLabel
-                  value="Resolvido"
-                  control={<Checkbox />}
-                  label="Resolvido"
-                  labelPlacement="end"
-                  />
-                  <FormControlLabel
-                  value="Negligenciado"
-                  control={<Checkbox />}
-                  label="Negligenciado"
-                  labelPlacement="end"
-                  />
-                  <FormControlLabel
-                  value="Em andamento"
-                  control={<Checkbox />}
-                  label="Em andamento"
-                  labelPlacement="end"
-                  />
-              </FormGroup>
-            </FormControl>
-          </div>
-          <CustomInput aria-label="Demo input" placeholder="Type something…"  onChange={(e) => setNewDescription(e.target.value)}/>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeDialog}>Cancel</Button>
-          <Button onClick={close}>Save</Button>
-        </DialogActions>
+        <AppBar sx={{ position: 'relative' }}>
+          <Toolbar>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="close"
+            >
+            </IconButton>
+            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+              {fileredTask == undefined ? (
+                <></>
+              ): (
+                <p>
+                    {fileredTask.name}
+                </p>
+              )}
+            </Typography>
+            <Button autoFocus color="inherit" onClick={closeModal}>
+              Close
+            </Button>
+          </Toolbar>
+        </AppBar>
+        {fileredTask == undefined? (
+          <> </>
+        ):
+          (
+            <div style={{display:"flex", justifyContent:"space-around"}}>
+              <h3>{fileredTask.description}</h3>
+              <p>{fileredTask.category}</p>
+              <p>{fileredTask.priority}</p>
+              <p>{fileredTask.status}</p>
+            </div>
+
+          )
+
+        }
+          <TextField id="outlined-basic" label="Adicionar mensagem" variant="outlined" onChange={(e) => setNewMessage(e.target.value)}/>
+          <FormControl sx={{ m: 1, minWidth: 120 }} size="medium">
+                  <InputLabel id="demo-select-small">Status</InputLabel>
+                  <Select
+                      labelId="demo-select-small"
+                      id="demo-select-small"
+                      value={newStatus}
+                      label="Status"
+                      onChange={(e) => setStatus(e.target.value)}
+                  >
+                      <MenuItem value="Status">
+                      </MenuItem>
+                      <MenuItem value={'Concluído'}>Concluído</MenuItem>
+                      <MenuItem value={'Negligenciado'}>Negligenciado</MenuItem>
+                      <MenuItem value={'Em andamento'}>Em andamento</MenuItem>
+                  </Select>
+              </FormControl>
+          <Button variant="outlined" onClick={senNewDatas}>Send</Button>
+          {filteredMessage.map((message) =>{
+            return(
+              <p key={message.id}>{message.message}</p>
+            )
+          })}
+
       </Dialog>
     </div>
   );

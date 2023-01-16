@@ -1,26 +1,13 @@
 import { useEffect, useState } from 'react'
-import { AlertDialogSlide } from '../Dialog'
 import './index.css'
 
 
-export function Card({datasForCreateCard, editTaskWithNewData,getMessengers}){
-    const [ showModal,setShowModal] = useState(false)
-
-    async function newTask(){
-        setShowModal(!showModal)
-       
-    }
-
-
-    function functionGetDataForNewTask(newDatas){
-        setShowModal(!showModal)
-        editTaskWithNewData(newDatas)
-    }
+export function Card({datasForCreateCard, task_details}){
+  
 
     return(
         <>
-        <AlertDialogSlide  seeModalYes={showModal} datas={datasForCreateCard} closeDialog={newTask} getDataForNewTask={functionGetDataForNewTask} messagers={getMessengers}/>
-        <div style={{  backgroundImage: `url(${datasForCreateCard.tech})`}} className="Card" onClick={() => newTask()}>
+        <div style={{  backgroundImage: `url(${datasForCreateCard.tech})`}} className="Card" >
             <div>
                 <h3>{datasForCreateCard.name}</h3>
                 <div>

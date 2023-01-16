@@ -40,3 +40,7 @@ export async function getAllMessenger(idTask) {
   const all = await axios.get(`http://localhost:3000/${idTask}`)
   return all
 }
+
+export async function registerNewTechAndNewCategory(taskAndCategory){
+  await axios.post('http://localhost:3000/tech-category',taskAndCategory)
+}
