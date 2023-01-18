@@ -1,8 +1,8 @@
 .section{
-    border-right: 1px solid black;
     display: flex;
     flex-direction: column;
-    width: 350px;
-    margin: 30px;
-    margin-top: 0;
+    width: 250px;
+    height: 310px;
+    padding-left: 20px;
+    background-color: #242424;
 }

@@ -38,8 +38,9 @@ export default function AlertDialogSlide({informationOfTask,showModal,notShowMod
 
   async function getParamsForDetailsTask(){
     const filterTask = await allTasks
-    const taskFilted = filterTask.filter(element => element.id == informationOfTask)
-    const FilterMessage = getMessengers.filter(element => element.id_task == informationOfTask)
+    const taskFilted =  filterTask.filter(element => element.id == informationOfTask)
+    const FilterMessage = await getMessengers.filter(element => element.id_task == informationOfTask)
+    console.log(getMessengers)
     setFilteredMessage(FilterMessage)
     setFilteredForDialog(taskFilted[0])
   }
@@ -59,7 +60,6 @@ export default function AlertDialogSlide({informationOfTask,showModal,notShowMod
       <Dialog
         fullScreen
         open={showModal}
-        onClose={showModal}
         TransitionComponent={Transition}
       >
         <AppBar sx={{ position: 'relative' }}>

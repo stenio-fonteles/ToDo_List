@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { Input } from '@mui/material';
 import './index.css'
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -11,12 +10,16 @@ import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 
 
-export function Register({onSubmit,AlertModal}){
+export function Regssssister({onSubmit,AlertModal,getAllTechnology}){
     const [inputToDo, setInputToDo] = useState('Nome da Task')
     const [description, setDescription] = useState('Descrição')
     const [status, setStatus ] = useState('')
     const [career, setCareer] = useState()
     const [tool, setTool] = useState()
+
+    const [allTech,setAllTech] = useState([])
+    const [category,setCtegory] = useState([])
+
   
     const obj = {
         "nameTask": inputToDo,
@@ -25,6 +28,21 @@ export function Register({onSubmit,AlertModal}){
         "career":career,
         "tool":tool,
     }
+
+    async function start(){
+        const responseAllTechs = await  getAllTechnology()
+        setAllTech(responseAllTechs)
+        const arr = [];
+        responseAllTechs.map((tech)=>{
+            arr.push(tech.category)
+        })
+        const filtered = arr.filter((item, index) => arr.indexOf(item) === index);
+        setCtegory(filtered)
+    }
+    
+    useEffect(() =>{
+        start()
+    },[])
     
     return(
         <div className="formRegister">
@@ -69,11 +87,14 @@ export function Register({onSubmit,AlertModal}){
                     value={career}
                     label="Assunto"
                     onChange={(e) => setCareer(e.target.value)}
-                    defaultValue={"FrontEnd"}
+                    defaultValue={'' }
                 >
-                    <MenuItem value={'FrontEnd'}>FrontEnd</MenuItem>
-                    <MenuItem value={'BackEnd'}>BackEnd</MenuItem>
-                    <MenuItem value={'FullStack'}>FullStack</MenuItem>
+                    {category.map((tech) => {
+                        return(
+                            <MenuItem key={Math.random()} value={tech}>{tech}</MenuItem>
+                        )
+                    })}
+
                 </Select>
             </FormControl>
 
@@ -85,11 +106,13 @@ export function Register({onSubmit,AlertModal}){
                     value={tool}
                     label="Assunto"
                     onChange={(e) => setTool(e.target.value)}
-                    defaultValue={"https://pbs.twimg.com/card_img/1607686726608211970/fTGdzsp1?format=png&name=medium"}
+                    defaultValue={''}
                 >
-                    <MenuItem value={'https://punkt.de/_Resources/Persistent/7/5/b/d/75bd14d2ed44da6bf49616fd635a36fa4bb2eac8/React_Native_Logo-1196x628.png'}>React</MenuItem>
-                    <MenuItem value={'https://www.itnetwork.cz/images/10733/nodejs/nodejs_logo.png'}>Node</MenuItem>
-                    <MenuItem value={"https://st2.depositphotos.com/4845131/7223/v/600/depositphotos_72231263-stock-illustration-data-hdd-icon.jpg"}>Banco de dados</MenuItem>
+                    {allTech.map((tech) => {
+                        return(
+                            <MenuItem key={tech.id} value={tech.img}>{tech.tech}</MenuItem>
+                        )
+                    })}
                 </Select>
             </FormControl>
             <div  className="button">

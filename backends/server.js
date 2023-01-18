@@ -1,17 +1,13 @@
 const express = require('express');
 const app = express();
 var cors = require('cors')
-const {randomUUID} = require('crypto');
 const { connection } = require('./connection');
 
 app.use(express.json())
 app.use(cors())
 
 const ToDo =  []
-const arrFilted = []
-const Relatorio = []
 
-const AllRelatorio = []
 
 app.get('/', async (req,res) =>{
     const tasks = await connection.task.findMany()
@@ -52,7 +48,7 @@ app.post("/status/", async (req,res) => {
     res.json(filteredTable)
 })
 
-app.get('/:id', async (req, res) =>{
+app.get(`/tasks/:id`, async (req, res) =>{
     const {id} = req.params;
     const filteredTable = await connection.history.findMany({where:{id_task:id.id}})
     res.json(filteredTable)
@@ -61,11 +57,13 @@ app.get('/:id', async (req, res) =>{
 
 app.post('/tech-category', async(req, res) =>{
     const {newCategory,newTech,image} = req.body;
-    await connection.category.create({data:{"category":newCategory}})
-    await connection.tech.create({data:{"img":image}})
-    await connection.tech.create({data:{"tech":newTech}})
+    await connection.technology.create({data:{tech:newTech, img:image,category:newCategory}})
 })
 
+app.get('/tech-category', async (req,res) => {
+    const allTechsFilted = await connection.technology.findMany()
+    return res.json(allTechsFilted)
+})
 
 
 app.listen(3000, ()=>{

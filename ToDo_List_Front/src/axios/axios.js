@@ -33,14 +33,26 @@ export async function FilterTasksForStatus(newStatus) {
 }
 
 export async function axiosPut(newStatusAndNewDescriptio) {
-  const popularMessage = await axios.put("http://localhost:3000/",newStatusAndNewDescriptio)
+  await axios.put("http://localhost:3000/",newStatusAndNewDescriptio)
 }
 
-export async function getAllMessenger(idTask) {
-  const all = await axios.get(`http://localhost:3000/${idTask}`)
-  return all
-}
+
 
 export async function registerNewTechAndNewCategory(taskAndCategory){
   await axios.post('http://localhost:3000/tech-category',taskAndCategory)
+}
+
+
+export async function getAllTechs(){
+  const {data} = await axios.get('http://localhost:3000/tech-category',
+  {
+   headers: { 
+    'Content-Type': 'application/json'
+  }})
+  return data
+}
+
+export async function getAllMessenger(idTask) {
+  const all = await axios.get(`http://localhost:3000/tasks/${idTask}`)
+  return all
 }

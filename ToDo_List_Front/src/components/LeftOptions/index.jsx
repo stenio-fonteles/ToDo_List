@@ -1,90 +1,38 @@
 import * as React from 'react';
-import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { Button } from '@mui/material';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
-import { Button, Input } from '@mui/material';
 import "./index.css"
 import { useState } from 'react';
 
 export  function LeftOptions({functionFilter}) {
     const [filterStatus, setFilterStatus] = useState()
-
-
     function sendNewStatus(){
         functionFilter(filterStatus)
     }
 
-    
-    
-    
   return (
     <div className='section'>
-        <FormControl component="fieldset">
-            <FormGroup aria-label="position" onChange={(event) => setFilterStatus(event.target.value)}>
-                <FormControlLabel
-                value="New"
-                control={<Checkbox />}
-                label="New"
-                labelPlacement="end"
-                />
-                <FormControlLabel
-                value="Concluído"
-                control={<Checkbox />}
-                label="Concluído"
-                labelPlacement="end"
-                />
-                <FormControlLabel
-                value="Negligenciado"
-                control={<Checkbox />}
-                label="Negligenciado"
-                labelPlacement="end"
-                />
-                <FormControlLabel
-                value="Em andamento"
-                control={<Checkbox />}
-                label="Em andamento"
-                labelPlacement="end"
-                />
-            </FormGroup>
-            <hr></hr>
-          
-        </FormControl>
-        <FormControl component="fieldset">
-            <FormGroup aria-label="position" >
-                <FormControlLabel
-                value="React"
-                control={<Checkbox />}
-                label="React"
-                labelPlacement="end"
-                />
-                <FormControlLabel
-                value="Node"
-                control={<Checkbox />}
-                label="Node"
-                labelPlacement="end"
-                />
-                <FormControlLabel
-                value="Banco de dados"
-                control={<Checkbox />}
-                label="Banco de dados"
-                labelPlacement="end"
-                />
-                <FormControlLabel
-                value="Influx db"
-                control={<Checkbox />}
-                label="Influx db"
-                labelPlacement="end"
-                />
-                <FormControlLabel
-                value="Docker"
-                control={<Checkbox />}
-                label="Docker"
-                labelPlacement="end"
-                />
-            </FormGroup>
-        </FormControl>
-        <Button variant="outlined" onClick={sendNewStatus}>query</Button>
+    <FormControl>
+      <RadioGroup
+        aria-labelledby="demo-radio-buttons-group-label"
+        defaultValue="female"
+        name="radio-buttons-group"
+        onChange={(event) => setFilterStatus(event.target.value)}
+      >
+        <FormControlLabel value="All" control={<Radio />} label="All" />
+        <FormControlLabel value="New" control={<Radio />} label="New" />
+        <FormControlLabel value="Concluído" control={<Radio />} label="Concluído" />
+        <FormControlLabel value="Em atendimento" control={<Radio />} label="Em atendimento" />
+        <FormControlLabel value="Negrigenciado" control={<Radio />} label="Negligenciado" />
+      </RadioGroup>
+    </FormControl>
+  
+        <div>
+           <Button variant="outlined" onClick={sendNewStatus}>query</Button>
+        </div>
     </div>
   );
 }
