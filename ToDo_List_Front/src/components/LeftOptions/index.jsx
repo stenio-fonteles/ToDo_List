@@ -25,7 +25,7 @@ export  function LeftOptions({functionFilter}) {
         <FormControlLabel value="All" control={<Radio />} label="All" />
         <FormControlLabel value="New" control={<Radio />} label="New" />
         <FormControlLabel value="Concluído" control={<Radio />} label="Concluído" />
-        <FormControlLabel value="Em atendimento" control={<Radio />} label="Em atendimento" />
+        <FormControlLabel value="Em andamento" control={<Radio />} label="Em andamento" />
         <FormControlLabel value="Negrigenciado" control={<Radio />} label="Negligenciado" />
       </RadioGroup>
     </FormControl>

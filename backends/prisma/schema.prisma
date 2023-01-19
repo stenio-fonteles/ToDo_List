@@ -18,6 +18,7 @@ model task {
   priority    String
   tech        String
   category    String
+  acting      String    @default("Pessoal")
   history     history[]
 }
 

@@ -34,7 +34,7 @@ export function Card({datasForCreateCard}){
                     ):(
                         <p style={{backgroundColor:"blue"}}>{datasForCreateCard.priority}</p>
                     )}
-                    <p>{datasForCreateCard.status}</p>
+                    <p data-testid="status">{datasForCreateCard.status}</p>
                 </div>
             </div>
         </div>

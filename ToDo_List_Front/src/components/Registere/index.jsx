@@ -23,6 +23,7 @@ export default function Register({onSubmit,AlertModal,getAllTechnology}) {
   const [status, setStatus ] = useState('')
   const [career, setCareer] = useState()
   const [tool, setTool] = useState()
+  const [ departament, setDepartament] = useState('')
 
   const [allTech,setAllTech] = useState([])
   const [category,setCtegory] = useState([])
@@ -34,6 +35,7 @@ export default function Register({onSubmit,AlertModal,getAllTechnology}) {
       "priority":status,
       "career":career,
       "tool":tool,
+      "departament":departament
   }
 
   async function start(){
@@ -154,6 +156,22 @@ export default function Register({onSubmit,AlertModal,getAllTechnology}) {
                             <MenuItem key={tech.id} value={tech.img}>{tech.tech}</MenuItem>
                         )
                     })}
+                </Select>
+            </FormControl>
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="medium">
+                <InputLabel id="demo-select-small">Departamt</InputLabel>
+                <Select
+                    labelId="demo-select-small"
+                    id="demo-select-small"
+                    value={status}
+                    label="Severidade"
+                    onChange={(e) => setDepartament(e.target.value)}
+                >
+                    <MenuItem value="Departamt">
+                    </MenuItem>
+                    <MenuItem value={'Pessoal'}>Pessoal</MenuItem>
+                    <MenuItem value={'Selletiva'}>Selletiva</MenuItem>
+                    <MenuItem value={'Plataforma'}>Plataforma</MenuItem>
                 </Select>
             </FormControl>
         <Divider />

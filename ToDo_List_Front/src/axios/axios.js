@@ -18,6 +18,7 @@ export async function post(e) {
           "priority":e.priority,
           "career":e.career,
           "tool":e.tool,
+          "departament":e.departament
         }
       )
 }

@@ -78,23 +78,53 @@ function App() {
 
   return (
     <div className='Home'>
+      <div className='grid'>
+
+        <div className='cardsGrid'>
+        <p>Pessoal</p>
+          {data.map((e) =>{
+            return(
+              <div className='cardPosition' key={e.id} onClick={() => function_task_details(e.id)}>
+                <Card datasForCreateCard={e}  />
+              </div>
+              )
+            })}
+            <AlertDialogSlide informationOfTask={idTaskSelected} getMessengers={allMessageHistory} showModal={showModal} notShowModal={setShowModal} allTasks={data} editTaskWithNewData={functionEditTaskWithNewData}/>
+        </div>
+
       <div className='cardsGrid'>
-        {data.map((e) =>{
-          return(
-            <div className='cardPosition' key={e.id} onClick={() => function_task_details(e.id)}>
-              <Card datasForCreateCard={e}  />
-            </div>
-            )
-          })}
-          <AlertDialogSlide informationOfTask={idTaskSelected} getMessengers={allMessageHistory} showModal={showModal} notShowModal={setShowModal} allTasks={data} editTaskWithNewData={functionEditTaskWithNewData}/>
+        <p>Selletiva</p>
+          {data.map((e) =>{
+            return(
+              <div className='cardPosition' key={e.id} onClick={() => function_task_details(e.id)}>
+                <Card datasForCreateCard={e}  />
+              </div>
+              )
+            })}
+            <AlertDialogSlide informationOfTask={idTaskSelected} getMessengers={allMessageHistory} showModal={showModal} notShowModal={setShowModal} allTasks={data} editTaskWithNewData={functionEditTaskWithNewData}/>
+        </div>
+
+        <div className='cardsGrid'>
+        <p>Plataforma</p>
+          {data.map((e) =>{
+            return(
+              <div className='cardPosition' key={e.id} onClick={() => function_task_details(e.id)}>
+                <Card datasForCreateCard={e}  />
+              </div>
+              )
+            })}
+            <AlertDialogSlide informationOfTask={idTaskSelected} getMessengers={allMessageHistory} showModal={showModal} notShowModal={setShowModal} allTasks={data} editTaskWithNewData={functionEditTaskWithNewData}/>
+        </div>
       </div>
+      
+
+      
       <div className='config'>
         <Register onSubmit={postToDoList} AlertModal={AlertModal} getAllTechnology={functionGetAllTechnology}/>
         <AccountMenu registerNewCategoryAndTech={registerNewCategoryAndTech}/>
       </div>
       <div className='Fixed'>
         <LeftOptions functionFilter={filterStatus}/>
-        {/* <Register onSubmit={postToDoList} AlertModal={AlertModal} getAllTechnology={functionGetAllTechnology}/> */}
       </div>
     </div>
   )

@@ -16,14 +16,15 @@ app.get('/', async (req,res) =>{
 
 
 app.post('/', async (req,res) =>{
-    const { name, description, priority,career,tool } = req.body;
+    const { name, description, priority,career,tool,departament } = req.body;
     await connection.task.create({
         data:{
             name:name,
             description:description,
             tech:tool,
             category:career,
-            priority:priority
+            priority:priority,
+            acting: departament
         }
     })
     res.send(ToDo)
