@@ -10,6 +10,7 @@ import { FormControl, InputLabel, Select, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
+import CustomizedHook from '../SelectManyOptions';
 
 export default function Register({onSubmit,AlertModal,getAllTechnology}) {
   const [anchorEl, setAnchorEl] = useState(false);
@@ -122,42 +123,10 @@ export default function Register({onSubmit,AlertModal,getAllTechnology}) {
                 </Select>
             </FormControl>
 
-            <FormControl sx={{ m: 1, minWidth: 120 }} size="medium">
-                <InputLabel id="demo-select-small">Categoria</InputLabel>
-                <Select
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    value={career}
-                    label="Assunto"
-                    onChange={(e) => setCareer(e.target.value)}
-                    defaultValue={'' }
-                >
-                    {category.map((tech) => {
-                        return(
-                            <MenuItem key={Math.random()} value={tech}>{tech}</MenuItem>
-                        )
-                    })}
+            <CustomizedHook Title={"Tecnologia"} Options={allTech}/>
+            <CustomizedHook Title={"Categoria"} Options={category}/>
 
-                </Select>
-            </FormControl>
 
-            <FormControl sx={{ m: 1, minWidth: 120 }} size="medium">
-                <InputLabel id="demo-select-small">Tech</InputLabel>
-                <Select
-                    labelId="demo-select-small"
-                    id="demo-select-small"
-                    value={tool}
-                    label="Assunto"
-                    onChange={(e) => setTool(e.target.value)}
-                    defaultValue={''}
-                >
-                    {allTech.map((tech) => {
-                        return(
-                            <MenuItem key={tech.id} value={tech.img}>{tech.tech}</MenuItem>
-                        )
-                    })}
-                </Select>
-            </FormControl>
             <FormControl sx={{ m: 1, minWidth: 120 }} size="medium">
                 <InputLabel id="demo-select-small">Departamt</InputLabel>
                 <Select
